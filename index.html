@@ -1,0 +1,69 @@
+<html>
+    <head></head>
+
+    <body>
+
+        <img id="theimage" src="test.png" />
+        <button id="detect" onclick="detect()"  class="btn btn-lg btn-primary">Detect the text</button>
+        <br>
+        <canvas id="canvas" height="180"></canvas> 
+
+
+        <script type="text/javascript">
+            var theStream = null;
+            
+            function detect() {
+                if (window.TextDetector == undefined) {
+                    //var footer = document.getElementsByTagName('footer')[0];
+                    //footer.innerHTML = "Text Detection not supported";
+                    console.error('Text Detection not supported');
+                    return;
+                }
+
+                var theImage = document.getElementById('theimage');
+
+                var textDetector = new TextDetector();
+                textDetector.detect(theImage)
+                    .then(texts => {
+                        for(var i = 0; i < texts.length; i++) {
+                                console.log(texts[i]);
+                        }
+                    /*var canvas = document.getElementById('canvas');    
+                    var ctx = canvas.getContext("2d");
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = "red";
+
+                    for(var i = 0; i < texts.length; i++) {
+                        const text = texts[i].boundingBox;
+                        ctx.rect(Math.floor(text.x), 
+                                Math.floor(text.y),
+                                Math.floor(text.width), 
+                                Math.floor(text.height));
+                        ctx.stroke();
+                    }*/
+                    
+                    // Add the barcodes as strings to the <footer>
+                    /*var footer = document.getElementsByTagName('footer')[0];
+                    footer.innerHTML = 
+                        '<p>Detected ' + texts.length + ' text areas</p><ul>';
+                    for(var i = 0; i < texts.length; i++) {
+                        footer.innerHTML += 
+                            '<li>@ (' + texts[i].boundingBox.x + ',' + 
+                            texts[i].boundingBox.y + '), size (' + 
+                            texts[i].boundingBox.width + 'x' + 
+                            texts[i].boundingBox.height + ')' + 
+                            '; rawValue=' + texts[i].rawValue + '</li>';
+                    }
+                    footer.innerHTML += '</ul>';
+                    */
+                    }).catch((e) => {
+                    //var footer = document.getElementsByTagName('footer')[0];
+                    //footer.innerHTML = "Boo, Text Detection failed: " + e;
+                    console.error("Boo, Text Detection failed: " + e);
+                    })
+                }
+
+
+        </script>
+    </body>
+</html>
